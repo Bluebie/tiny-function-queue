@@ -25,7 +25,7 @@ describe('lockWhile calls run in serial call order', () => {
   it('builds string in order with Promise.all()', async () => {
     const goal = 'abcd'
     let str = ''
-    let prom = Promise.all([
+    const prom = Promise.all([
       taq.lockWhile('string2', async () => {
         str += 'a'
         await delay(50)
@@ -47,7 +47,7 @@ describe('lockWhile calls run in serial call order', () => {
   it('arrays as queue names', async () => {
     const goal = 'abcd'
     let str = ''
-    let prom = Promise.all([
+    const prom = Promise.all([
       taq.lockWhile(['neat', 'task'], async () => {
         str += 'a'
         await delay(50)
