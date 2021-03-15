@@ -10,15 +10,22 @@ async function runQueue (key) {
 
 /**
  * locks a specified path, runs a block function, then unlocks the path and returns the result
- * @param {*} path - path, anything json stringifyable
+ * @param {*} queueName - anything json stringifyable, to unquely identify which ephemeral queue to use
  * @param {Function|async function} block - callback function, lockWhile will wait until it can get a lock, then it will run the block
- * @async
  * @returns {*} - whatever your block returns
+ * @async
  */
-exports.lockWhile = async function (path, block) {
+exports.lockWhile = async function (queueName, block) {
   return new Promise((resolve, reject) => {
-    const key = JSON.stringify(path)
-    const job = () => { block().then(out => resolve(out)).catch(err => reject(err)) }
+    const key = typeof queueName === 'string' ? queueName : JSON.stringify(queueName)
+    const job = async () => {
+      try {
+        resolve(await block())
+      } catch (err) {
+        reject(err)
+      }
+    }
+
     if (!Array.isArray(queues[key])) {
       queues[key] = [job]
       runQueue(key)

@@ -1,13 +1,15 @@
 {
-  "name": "tiny-async-queue",
+  "name": "tiny-function-queue",
   "version": "1.0.0",
   "description": "Very simple queue thing for async functions, for when you need something a bit like a file lock, for a single threaded app, to stop different async functions from clobbering each other's work",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
+  "repository": "https://github.com/Bluebie/tiny-async-queue.git",
+  "homepage": "https://github.com/Bluebie/tiny-async-queue",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "async",
@@ -17,5 +19,9 @@
     "mutex"
   ],
   "author": "Phoenix Fox",
-  "license": "Unlicense"
+  "license": "Unlicense",
+  "devDependencies": {
+    "delay": "^5.0.0",
+    "mocha": "^8.3.2"
+  }
 }
